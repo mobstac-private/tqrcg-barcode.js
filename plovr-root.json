@@ -1,0 +1,25 @@
+{
+  "id": "qrcodejs",
+  "closure-library": "node_modules/google-closure-library/closure/goog/",
+  "paths": [
+    "src",
+    "node_modules/google-closure-library/third_party/closure/goog/mochikit/"
+  ],
+  "inputs": "src/main.js",
+  "test-template": "src/plovr-tests.soy",
+  "debug": false,
+  "mode": "ADVANCED",
+  "level": "VERBOSE",
+  "output-charset": "UTF-8",
+  "define": {
+  },
+  "externs": [
+    "externs/iconv.js"
+  ],
+  "experimental-compiler-options": {
+    "generateExports": true,
+    // These options degrades performance significantly, so disable them.
+    "inlineFunctions": false,
+    "collapseProperties": false // Flattens multi-level property names (e.g. a$b = x)
+  }
+}

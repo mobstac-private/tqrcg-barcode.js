@@ -1,0 +1,12 @@
+~*
+*.swp
+*.pyc
+.idea/
+.hg/
+.hgignore
+node_modules/
+libs/
+dist/
+bower_components/
+src/w69b/shaders/compiled.js
+
