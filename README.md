@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/Schibum/barcode.js.svg?branch=master)](https://travis-ci.org/Schibum/barcode.js)
 # barcode.js QR Code library
 Javascript QR Code library, based on [zxing](https://github.com/zxing/).
+
 Features robust, high-performance, WebGL-accelerated QR Code scanning.
 
 Footprint (compiled and gzipped):
@@ -93,7 +94,7 @@ w69b.qr.deocding.setIconvUrl('/path/to/w69b.qrcode.decodeworker.min.js');
 ## Image processing
 As a pre-processing steps images are converted to binary black/white images (binarized) before
 a QR code is searched. There are two binarizers that can be used for this purpose. A pure
-javascript based image binarizer (hybridbinarizer.js) ported from zxing. There is also an
+javascript based image binarizer (hybridbinarizer.js) ported from zxing, there is also an
 alternative WebGL-based implmentation that (mis-)uses shaders for the same purpose.
 
 The WebGL binarizer does not compute the same binary images as the pure js binarizer. However
@@ -107,6 +108,7 @@ You can play around with it here:
 Or run a benchmark to see how this affects decoding:
 [Decoding Benchmark](https://schibum.github.io/barcode.js/playground/benchmark.html)
 
+The scanner widget always uses the WebGL binarizer, if supported.
 
 ## Generate QR Code
 Generate a QR code containing 'hello world' and draw it on a canvas.
