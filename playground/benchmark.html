@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>QRCODE</title>
+  <title>Decoding Benchmark</title>
 
   <style type="text/css">
     #result {
@@ -119,6 +119,7 @@
     }
 
     function init() {
+      log('WebGL supported: ', w69b.qr.decoding.isWebGlSupported());
       var startBtn = document.getElementById('startBtn');
       w69b.qr.decoding.setWorkerUrl(
         '../dist/w69b.qrcode.decodeworker.min.js');

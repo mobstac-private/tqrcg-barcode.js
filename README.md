@@ -1,12 +1,28 @@
+[![Build Status](https://travis-ci.org/Schibum/barcode.js.svg?branch=master)](https://travis-ci.org/Schibum/barcode.js)
 # barcode.js QR Code library
-Javscript QR Code library, based on zxing.
+Javascript QR Code library, based on [zxing](https://github.com/zxing/).
+Features robust, high-performance, WebGL-accelerated QR Code scanning.
 
-Features real-time qr code
+Footprint (compiled and gzipped):
+- main js file: ~75kb
+- worker: ~40kb
 
 ## Use it
 
 ### Install
-TODO: add to bower/npm repo
+With bower:
+```
+bower install barcode.js
+```
+Or with npm:
+```
+npm install barcode.js
+```
+
+Then add it to your document:
+```html
+<script src="/node_modules/barcode.js/w69b.qrcode.min.js"></script>
+```
 
 ## Decode QR Code
 ```javascript
@@ -59,6 +75,8 @@ necessary.
     scanner.dispose();
 ```
 
+[Continuous Scanner Demo](https://schibum.github.io/barcode.js/playground/scanner.html)
+
 ## Charsets
 This library uses TextDecoder to support a wide range of charsets. It also supports most common
 charsets (UTF8, ISO-8859-*) on browsers don't nave native TextDecoder support yet.
@@ -72,28 +90,48 @@ barcode.js
 w69b.qr.deocding.setIconvUrl('/path/to/w69b.qrcode.decodeworker.min.js');
 ```
 
-## Image processing / Binarizer
+## Image processing
 As a pre-processing steps images are converted to binary black/white images (binarized) before
 a QR code is searched. There are two binarizers that can be used for this purpose. A pure
 javascript based image binarizer (hybridbinarizer.js) ported from zxing. There is also an
 alternative WebGL-based implmentation that (mis-)uses shaders for the same purpose.
 
 The WebGL binarizer does not compute the same binary images as the pure js binarizer. However
-it yields binary images of comparable quality in practice. Depending on browser and hardware
+it yields binary images of comparable quality in practice. Depending on browser and hardware,
 performance can be significantly faster.
 
+You can play around with it here:
+[Binarizer Visualization]
+(https://schibum.github.io/barcode.js/playground/binarize_video.html)
+
+Or run a benchmark to see how this affects decoding:
+[Decoding Benchmark](https://schibum.github.io/barcode.js/playground/benchmark.html)
 
 
 ## Generate QR Code
 Generate a QR code containing 'hello world' and draw it on a canvas.
 ```javascript
+  // Draw on canvas:
   var canvas = document.createElement('canvas');
   w69.qr.encoding.drawOnCanvas('hello world', canvas);
+
+  // As SVG
+  var size = 100;  // desired size
+  // get SVG source
+  var svg = w69b.qr.encoding.drawAsSVG('hello', size)
 ```
+[Genarate Demo](http://localhost:8000/playground/playground_encode.html)
 
 ### Build it
 ```
 npm install
-bower install
+npm install -g gulp
+gulp
 ```
 
+## License
+[GPLv3](http://www.gnu.org/licenses/gpl-3.0.en.html)
+
+This project includes some APACHE2 licensed files (see sources)
+
+QR Code is trademarked by Denso Wave, inc.

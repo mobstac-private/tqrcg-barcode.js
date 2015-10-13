@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>QRCODE</title>
+    <title>Scanner Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
         body, html {
             width: 100%;
@@ -16,17 +17,8 @@
         }
     </style>
 
-    <!--
-    <script type="text/javascript"
-            src="http://localhost:9810/compile?id=qrcodejs&mode=RAW"></script>
-
-    <script type="text/javascript">
-        goog.require('w69b.qr.ui.ContinuousScanner');
-    </script>
-            -->
     <script type="text/javascript"
             src="../dist/w69b.qrcode.min.js"></script>
-
 
 </head>
 
@@ -45,7 +37,7 @@
         function load() {
             var scanner =  new w69b.qr.ui.ContinuousScanner();
             scanner.setDecodedCallback(function(result) {
-              console.log(result);
+              alert('decoded: ' + result);
             });
             scanner.render(document.getElementById('scanner'));
         }

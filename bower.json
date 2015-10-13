@@ -1,12 +1,15 @@
 {
   "name": "barcode.js",
-  "version": "0.1.0",
+  "version": "0.1.8",
   "authors": [
     "mb@w69b.com"
   ],
   "description": "QR Code Generator and Scanner",
   "keywords": [
     "qrcode"
+  ],
+  "main": [
+    "dist/w69b.qrcode.min.js"
   ],
   "license": "GPLv3",
   "ignore": [
@@ -16,6 +19,5 @@
     "test",
     "tests"
   ],
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

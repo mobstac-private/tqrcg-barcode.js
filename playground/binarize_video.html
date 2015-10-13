@@ -1,6 +1,6 @@
 <html>
 <head>
-  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Binarizer Demo</title>
 
@@ -31,6 +31,7 @@
 </head>
 <body>
 <h1>Demo/Benchmark of WebGL vs pure js image binarizer</h1>
+
 <div>
   <label>
     <input type="checkbox" id="useGl" checked/>
@@ -40,7 +41,9 @@
 <div>
   <span id="fps">fps</span> (without rendering overhead for native binarizer)
 </div>
+<h3>WebGL output</h3>
 <canvas width="416" height="416" id="glCanvas"></canvas>
+<h3>js output</h3>
 <canvas width="416" height="416" id="nativeCanvas"></canvas>
 
 <img id="img" src=""/>
@@ -86,7 +89,7 @@
       measureTime(function() {
         if (useGl) {
           binarizer.render(capturer.getVideo());
-          binary = binarizer.getBitMatrix();
+          binarizer.getBitMatrix();
         } else {
           var imgData = imgtools.getImageData(capturer.getVideo());
           binary = preprocessing.binarizeImageData(imgData);

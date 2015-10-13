@@ -7,6 +7,7 @@
 node_modules/
 libs/
 dist/
+tmp/
 bower_components/
 src/w69b/shaders/compiled.js
 

@@ -18,6 +18,10 @@ var wrap = require('gulp-wrap');
 var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
 var plovr = require('gulp-plovr');
+var gulp = require('gulp');
+// Adds gulp tag, and gulp bump tasks,
+// see https://github.com/lfender6445/gulp-release-tasks
+require('gulp-release-tasks')(gulp);
 
 
 var PATHS = {
@@ -44,8 +48,8 @@ var PATHS = {
   }
 };
 
-gulp.task('clean', function(done) {
-  del(['dist'], done);
+gulp.task('clean', function() {
+  return del(['dist']);
 });
 
 gulp.task('gjslint', function() {
@@ -88,7 +92,7 @@ function buildDebug(module) {
 
   var getFiles = through.obj(function(file, enc, cb) {
     if (file.isStream()) {
-      cb(new gutil.PluginError('shader2js', 'Streaming not supported'));
+      cb(new gutil.PluginError('buildDebug', 'Streaming not supported'));
       return;
     }
     fileList = file.contents.toString().split('\n');
@@ -126,7 +130,7 @@ gulp.task('buildDebug:main', ['shader2js'], function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('buildDebug:worker', function() {
+gulp.task('buildDebug:worker', ['shader2js'], function() {
   return buildDebug('w69b.qr.DecodeWorker')
     .pipe(sourcemaps.init())
     .pipe(concat('w69b.qrcode.decodeworker.js'))

@@ -208,8 +208,8 @@ goog.scope(function() {
     if (this.stream_) {
       if (this.stream_.stop)
         this.stream_.stop();
-      if (this.stream_.getTracks) {
-        this.stream_.getTracks(function(track) {
+      if (this.stream_['getTracks']) {
+        this.stream_['getTracks'](function(track) {
           track.stop();
         });
       }

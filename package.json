@@ -1,7 +1,12 @@
 {
-  "author": "",
+  "author": "Manuel Braun (mb@w69b.com)",
   "name": "barcode.js",
-  "version": "0.1.0",
+  "version": "0.1.8",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Schibum/barcode.js"
+  },
   "dependencies": {},
   "devDependencies": {
     "chai": "^3.3.0",
@@ -17,6 +22,7 @@
     "gulp-debug": "^2.1.1",
     "gulp-gjslint": "^0.1.5",
     "gulp-plovr": "0.0.1",
+    "gulp-release-tasks": "0.0.3",
     "gulp-size": "^2.0.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.6",
@@ -29,6 +35,7 @@
     "karma-firefox-launcher": "~0.1.3",
     "karma-mocha": "~0.2.0",
     "karma-requirejs": "~0.2.1",
+    "karma-sauce-launcher": "^0.2.14",
     "karma-sourcemap-loader": "^0.3.5",
     "matchdep": "~1.0.0",
     "mocha": "~2.3.3",
