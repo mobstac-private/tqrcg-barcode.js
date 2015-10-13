@@ -57,15 +57,44 @@
     var nativeCanvas = document.getElementById('nativeCanvas');
     var nativeCtx = nativeCanvas.getContext('2d');
     var fpsEl = document.getElementById('fps');
-    var binarizer, capturer;
+    var binarizer, video;
 
+    function loadLocalVideo() {
+      return new Promise(function(resolve) {
+        var video = document.createElement('video');
+        video.setAttribute('autoplay', true);
+        video.setAttribute('loop', true);
+        video.innerHTML = '<source type="video/webm" src="../test_data/firefox.webm">' +
+          '<source type="video/mp4" src="../test_data/firefox.mp4">';
+        video.addEventListener('canplay', function() {
+          video.play();
+          resolve(video);
+        });
+      });
+    }
+
+    function captureVideo() {
+      return new Promise(function(resolve) {
+        var capturer = new w69b.LocalVideoCapturer();
+        capturer.start(function() {
+          resolve(capturer.getVideo());
+        });
+      });
+    }
 
     function init() {
       binarizer = new w69b.img.WebGLBinarizer(glCanvas);
       binarizer.setFlipInput(true);
-      capturer = new w69b.LocalVideoCapturer();
-      capturer.start(function() {
-        var video = capturer.getVideo();
+      var promise;
+      if (w69b.LocalVideoCapturer.getMedia) {
+        promise = captureVideo();
+      } else {
+        console.log('getUserMedia not supported, using boring fallback video');
+        promise = loadLocalVideo();
+      }
+
+      promise.then(function(vid) {
+        video = vid;
         var width = video.videoWidth;
         var height = video.videoHeight;
         nativeCanvas.width = width;
@@ -79,7 +108,7 @@
       var startTime = new Date().getTime();
       fn();
       var delta = new Date().getTime() - startTime;
-      fpsEl.innerHTML = delta + 'ms / ' + Math.round(1000 / delta) + 'fps';
+      fpsEl.innerHTML = Math.round(1000 / delta) + 'fps / ' + delta + 'ms';
       return delta;
     }
 
@@ -88,10 +117,10 @@
       var binary;
       measureTime(function() {
         if (useGl) {
-          binarizer.render(capturer.getVideo());
+          binarizer.render(video);
           binarizer.getBitMatrix();
         } else {
-          var imgData = imgtools.getImageData(capturer.getVideo());
+          var imgData = imgtools.getImageData(video);
           binary = preprocessing.binarizeImageData(imgData);
         }
       });

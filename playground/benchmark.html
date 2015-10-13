@@ -43,7 +43,7 @@
       var args = [].map.call(arguments, function(item) {
         return JSON.stringify(item);
       });
-      logEl.innerText += args.join(' ') + '\n';
+      logEl.innerHTML += args.join(' ') + '\n';
     }
 
 
@@ -110,7 +110,8 @@
         var video = document.createElement('video');
         video.setAttribute('autoplay', true);
         video.setAttribute('loop', true);
-        video.src = "../test_data/firefox.webm";
+        video.innerHTML = '<source type="video/webm" src="../test_data/firefox.webm">' +
+          '<source type="video/mp4" src="../test_data/firefox.mp4">';
         video.addEventListener('canplay', function() {
           video.play();
           resolve(video);
@@ -135,7 +136,6 @@
           });
         });
       });
-
     }
 
     init();
