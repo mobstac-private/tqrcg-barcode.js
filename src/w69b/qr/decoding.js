@@ -65,7 +65,7 @@ goog.scope(function() {
       'webgl': true,
       'maxSize': 700
     };
-    object.extend(opt, options);
+    object.extend(opt, options || {});
     var worker = new DecodeInWorkerHelper();
     worker.enableWebGl(opt['webgl']);
     worker.enableWorker(opt['worker']);
