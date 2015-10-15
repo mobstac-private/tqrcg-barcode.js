@@ -35,7 +35,7 @@ var options = {}
 //    * - {boolean} webgl: use webgl binarizer, if supported, defaults to true
 //    * - {number} maxSize: scale down image if large than this value in any dimension.
 //    *  Defaults to 700px.
-var decoder = w69b.qr.decoding.Decoder(options)
+var decoder = new w69b.qr.decoding.Decoder(options)
 img.addEventListener('load', function() {
     decoder.decode(img).then(function(result) {
         // succesfully decoded QR Code.
@@ -45,6 +45,10 @@ img.addEventListener('load', function() {
     });
 });
 img.src = 'some_qr_code.png';
+
+// At some later point: Make sure to destroy the decoder when not needed
+// anymore. This terminates the web worker, if it was used.
+decoder.dispose();
 ```
 
 ## Scanner Widget
