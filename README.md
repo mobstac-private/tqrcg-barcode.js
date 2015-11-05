@@ -28,7 +28,7 @@ Then add it to your document:
 ## Decode QR Code
 ```javascript
 // Set path to decode worker. Required if worker is used for decoding.
-w69b.qr.deocding.setWorkerUrl('/path/to/w69b.qrcode.decodeworker.min.js');
+w69b.qr.decoding.setWorkerUrl('/path/to/w69b.qrcode.decodeworker.min.js');
 var options = {}
 //  options with the following properties:
 //    * - {boolean} worker: use web worker, if supported, defaults to true
