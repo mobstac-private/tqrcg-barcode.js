@@ -92,7 +92,7 @@ barcode.js
 // Optional, iconv is only needed in case you have to decode qr codes encoded in
 // rare non-utf8 charsets that neither TextDecoder nor the bundled iconvlite library supports.
 // It's lazily loaded in case you should encounter such a charset.
-w69b.qr.deocding.setIconvUrl('/path/to/w69b.qrcode.decodeworker.min.js');
+w69b.qr.decoding.setIconvUrl('/path/to/w69b.qrcode.decodeworker.min.js');
 ```
 
 ## Image processing
