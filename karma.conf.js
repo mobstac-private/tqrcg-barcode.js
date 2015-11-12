@@ -4,13 +4,11 @@ module.exports = function(karma) {
       base: 'SauceLabs',
       browserName: 'chrome',
       platform: 'Linux',
-      version: '45'
     },
     sl_firefox: {
       base: 'SauceLabs',
       browserName: 'firefox',
       platform: 'Linux',
-      version: '41'
     }
   };
 
