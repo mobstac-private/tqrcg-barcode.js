@@ -209,11 +209,10 @@ goog.scope(function() {
       if (this.stream_.stop)
         this.stream_.stop();
       if (this.stream_['getTracks']) {
-        this.stream_['getTracks'](function(track) {
+        this.stream_['getTracks']().forEach(function(track) {
           track.stop();
         });
       }
     }
   };
 });
-
