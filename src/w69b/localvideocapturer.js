@@ -24,23 +24,23 @@ goog.scope(function() {
     this.backContext_ = /** @type {CanvasRenderingContext2D} */ (
       this.backCanvas_.getContext('2d'));
   };
-  var LocalVideoCaptuerer = w69b.LocalVideoCapturer;
-  goog.inherits(LocalVideoCaptuerer, goog.Disposable);
-  var pro = LocalVideoCaptuerer.prototype;
+  var LocalVideoCapturer = w69b.LocalVideoCapturer;
+  goog.inherits(LocalVideoCapturer, goog.Disposable);
+  var pro = LocalVideoCapturer.prototype;
 
   /**
    * Alias to getUserMedia functions.
    * @type {Function}
    */
-  LocalVideoCaptuerer.getMedia = (
+  LocalVideoCapturer.getMedia = (
     navigator['getUserMedia'] ||
       navigator['webkitGetUserMedia'] ||
       navigator['mozGetUserMedia'] ||
       navigator['msGetUserMedia']);
 
-  if (LocalVideoCaptuerer.getMedia)
-    LocalVideoCaptuerer.getMedia =
-      LocalVideoCaptuerer.getMedia.bind(navigator);
+  if (LocalVideoCapturer.getMedia)
+    LocalVideoCapturer.getMedia =
+      LocalVideoCapturer.getMedia.bind(navigator);
 
   /**
    * Canvas uses to call getImageData on.
@@ -185,7 +185,7 @@ goog.scope(function() {
           break;
         }
       }
-      LocalVideoCaptuerer.getMedia({'video': constraint},
+      LocalVideoCapturer.getMedia({'video': constraint},
         self.onGetMediaSuccess.bind(self),
         self.onGetMediaError.bind(self));
     }
