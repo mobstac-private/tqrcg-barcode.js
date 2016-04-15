@@ -1,6 +1,7 @@
 // (c) 2013 Manuel Braun (mb@w69b.com)
 goog.provide('w69b.qr.ui.ContinuousScanner');
 goog.require('goog.math.Size');
+goog.require('goog.object');
 goog.require('goog.string');
 goog.require('goog.style');
 goog.require('goog.ui.Component');
@@ -16,6 +17,7 @@ goog.scope(function() {
   var imgtools = w69b.imgtools;
   var Size = goog.math.Size;
   var WorkerMessageType = w69b.qr.WorkerMessageType;
+  var object = goog.object;
 
   /**
    *
@@ -39,10 +41,15 @@ goog.scope(function() {
    * @extends {goog.ui.Component}
    * @export
    */
-  w69b.qr.ui.ContinuousScanner = function() {
+  w69b.qr.ui.ContinuousScanner = function(options) {
     goog.base(this);
+    var opt = {
+      'webgl': true
+    };
+    object.extend(opt, options || {});
     this.capturer_ = new w69b.LocalVideoCapturer();
     this.worker_ = new w69b.qr.DecodeInWorkerHelper();
+    this.worker_.enableWebGl(opt['webgl']);
     this.worker_.init();
     this.foundPatterns_ = [];
     this.lastFrameTime_ = null;
