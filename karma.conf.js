@@ -9,6 +9,10 @@ module.exports = function(karma) {
       base: 'SauceLabs',
       browserName: 'firefox',
       platform: 'Linux',
+    },
+    travis_chrome: {
+      base: 'Chrome',
+      flags: ['--no-sandbox']
     }
   };
 
@@ -58,9 +62,13 @@ module.exports = function(karma) {
     browserNoActivityTimeout: 300000
   };
 
-  if (process.env.TRAVIS && process.env.TRAVIS_PULL_REQUEST == 'false') {
-    cfg.browsers = Object.keys(sauceLaunchers);
+  if (process.env.TRAVIS) {
     cfg.reporters = ['dots'];
+    // sauce has WebGl, travis not
+    if (process.env.TRAVIS_PULL_REQUEST == 'false')
+      cfg.browsers = Object.keys(sauceLaunchers);
+    else
+      cfg.browsers = ['Firefox', 'travis_chrome'];
   }
 
   karma.set(cfg);
