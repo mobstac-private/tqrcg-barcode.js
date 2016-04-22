@@ -10,10 +10,11 @@ module.exports = function(karma) {
       browserName: 'firefox',
       platform: 'Linux',
     },
-    travis_chrome: {
-      base: 'Chrome',
-      flags: ['--no-sandbox']
-    }
+    // Chrome on travis is too old
+    // travis_chrome: {
+    //   base: 'Chrome',
+    //   flags: ['--no-sandbox']
+    // }
   };
 
   var cfg = {
@@ -68,7 +69,7 @@ module.exports = function(karma) {
     if (process.env.TRAVIS_PULL_REQUEST == 'false')
       cfg.browsers = Object.keys(sauceLaunchers);
     else
-      cfg.browsers = ['Firefox', 'travis_chrome'];
+      cfg.browsers = ['Firefox'];
   }
 
   karma.set(cfg);
