@@ -58,7 +58,7 @@ module.exports = function(karma) {
     browserNoActivityTimeout: 300000
   };
 
-  if (process.env.TRAVIS) {
+  if (process.env.TRAVIS && process.env.TRAVIS_PULL_REQUEST == 'false') {
     cfg.browsers = Object.keys(sauceLaunchers);
     cfg.reporters = ['dots'];
   }
