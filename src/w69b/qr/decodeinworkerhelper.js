@@ -34,7 +34,7 @@ goog.scope(function() {
    * @type {boolean}
    * @private
    */
-  pro.enagleWebGl_ = true;
+  pro.enableWebGl_ = true;
 
   /**
    * @type {boolean}
@@ -85,7 +85,7 @@ goog.scope(function() {
    * @param {boolean} enable WebGL.
    */
   pro.enableWebGl = function(enable) {
-    this.enagleWebGl_ = enable;
+    this.enableWebGl_ = enable;
   };
 
   /**
@@ -125,7 +125,7 @@ goog.scope(function() {
    * @return {boolean} true if webGl is enabled and supported
    */
   pro.isWebGlEnabledAndSupported = function() {
-    return this.enagleWebGl_ && WebGLBinarizer.isSupported();
+    return this.enableWebGl_ && WebGLBinarizer.isSupported();
   };
 
   /**
@@ -168,7 +168,7 @@ goog.scope(function() {
     var isBinary = false;
     var imgDataOrMatrix = imgdata;
     size.round();
-    if (this.enagleWebGl_) {
+    if (this.enableWebGl_) {
       // lazzily initialize binarizer
       if (!this.webGLBinarizer_ && WebGLBinarizer.isSupported())
         this.webGLBinarizer_ = new WebGLBinarizer();
