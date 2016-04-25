@@ -2,7 +2,7 @@
   "author": "Manuel Braun (mb@w69b.com)",
   "name": "barcode.js",
   "version": "0.1.13",
-  "license": "GPL-3.0",
+  "license": "APACHE-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/Schibum/barcode.js"

@@ -136,8 +136,6 @@ gulp
 ```
 
 ## License
-[GPLv3](http://www.gnu.org/licenses/gpl-3.0.en.html)
-
-This project includes some APACHE2 licensed files (see sources)
+[APACHE2](http://www.apache.org/licenses/LICENSE-2.0)
 
 QR Code is trademarked by Denso Wave, inc.

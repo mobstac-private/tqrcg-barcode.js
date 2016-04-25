@@ -11,7 +11,7 @@
   "main": [
     "dist/w69b.qrcode.min.js"
   ],
-  "license": "GPLv3",
+  "license": "APACHE-2.0",
   "ignore": [
     "**/.*",
     "node_modules",
