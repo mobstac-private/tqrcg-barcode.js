@@ -289,13 +289,14 @@ goog.scope(function() {
       img.setGray(90, 4, 50);
       try {
         var binarizer = new w69b.img.WebGLBinarizer();
-      } catch (ignored) {
-        // No webgl support.
+        binarizer.setFlipInput(false);
+        binarizer.setup(width, height);
+        binarizer.render(img);
+      } catch (err) {
+        console.debug('No webgl binarizer support:', err);
+        _.isSupported_ = false;
         return false;
       }
-      binarizer.setFlipInput(false);
-      binarizer.setup(width, height);
-      binarizer.render(img);
       var binary = binarizer.getImageData();
       // Check some black and white values.
       _.isSupported_ = (binary.get(30, 4)[0] == 0 &&
