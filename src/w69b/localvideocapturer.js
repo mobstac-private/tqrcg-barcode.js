@@ -153,11 +153,7 @@ goog.scope(function() {
     // If disposed since, dont do anything.
     if (this.mediaVideo_ === null)
       return;
-    // this is how opera handles it.
-    if (navigator['getUserMedia'])
-      this.mediaVideo_.src = stream;
-    else
-      this.mediaVideo_.src = window.URL.createObjectURL(stream);
+    this.mediaVideo_.src = window.URL.createObjectURL(stream);
     this.mediaVideo_.play();
     this.stream_ = stream;
   };
