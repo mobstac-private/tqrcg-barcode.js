@@ -1,0 +1,53 @@
+<html>
+<head>
+  <title>Generate Code Demo</title>
+
+  <script type="text/javascript"
+          src="../dist/w69b.qrcode.min.js"></script>
+
+</head>
+<textarea id="input">helloö€</textarea>
+<br/>
+<canvas width="400" height="400" id="canvas"></canvas>
+<button id="save">save</button>
+<button id="save_svg">saveSVG</button>
+
+<script type="text/javascript">
+
+  (function() {
+    var input, canvas;
+
+    function renderQR() {
+      var txt = input.value;
+      w69b.qr.encoding.drawOnCanvas(txt, canvas);
+    }
+
+    function onSave(ev) {
+      w69b.imgtools.getCanvasAsBlob(canvas, function(blob) {
+        w69b.FileSaver.saveAs(blob, 'bla.png');
+      });
+    }
+
+    function onSaveSvg(ev) {
+      var txt = input.value;
+      var blob = new Blob([w69b.qr.encoding.drawAsSVG(txt, 100)]);
+      w69b.FileSaver.saveAs(blob, 'bla.svg');
+    }
+
+    function load() {
+      input = document.getElementById('input');
+      canvas = document.getElementById('canvas');
+      var save = document.getElementById('save');
+      var saveSvg = document.getElementById('save_svg');
+      input.addEventListener('keyup', renderQR, false);
+      save.addEventListener('click', onSave, false);
+      saveSvg.addEventListener('click', onSaveSvg, false);
+      renderQR();
+    }
+
+    load();
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<html>
+<head>
+  <title>Binarizer Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script type="text/javascript" src="../dist/w69b.qrcode.js"></script>
+
+  <script type="text/javascript">
+    goog.require('w69b.qr.Detector');
+    goog.require('w69b.qr.imagedecoding');
+    goog.require('w69b.imgtools');
+    goog.require('w69b.qr.nativepreprocessing');
+    goog.require('w69b.qr.FinderPatternFinder');
+  </script>
+
+
+</head>
+<input type="file" id="file"/>
+<canvas id="canvas">
+</canvas>
+<img id="input_image"/>
+
+<script type="text/javascript">
+
+  (function() {
+    var imgtools = w69b.imgtools;
+    var preprocessing = w69b.qr.nativepreprocessing;
+    var decoding = w69b.qr.imagedecoding;
+    var fileEl, inputImageEl, imageEl, canvasEl, context;
+
+    function onDecoded(result) {
+      console.log(result);
+    }
+
+    function load() {
+      // qrcode.decode('qr_hello.png');
+      fileEl = document.getElementById('file');
+      imageEl = document.getElementById('input_image');
+      inputImageEl = document.getElementById('input_image');
+      canvasEl = document.getElementById('canvas');
+      context = canvasEl.getContext('2d');
+      fileEl.addEventListener('change', function() {
+        if (fileEl.files.length > 0) {
+          inputImageEl.src = URL.createObjectURL(fileEl.files[0]);
+        }
+      }, false);
+      imageEl.onload = function() {
+        var imgData = imgtools.getImageData(imageEl, 700);
+        var binary = preprocessing.binarizeImageData(imgData);
+        finder(binary);
+        var result = decoding.decodeFromImageData(imgData);
+        onDecoded(result.getText());
+        onDecoded(result.getError());
+      };
+    }
+
+    function finder(bitmap) {
+      showBinary(bitmap);
+      var info = new w69b.qr.FinderPatternFinder(bitmap).find();
+      drawPoint(info.topLeft.x, info.topLeft.y);
+      drawPoint(info.bottomLeft.x, info.bottomLeft.y);
+      drawPoint(info.topRight.x, info.topRight.y);
+    }
+
+    function drawPoint(x, y) {
+      context.fillStyle = 'rgba(200,255,50,1)';
+      context.beginPath();
+      context.arc(x, y, 3, 0, 2 * Math.PI, false);
+      context.fill();
+    }
+
+    function showBinary(matrix) {
+      canvasEl.width = matrix.getWidth();
+      canvasEl.height = matrix.getHeight();
+      var imgData = context.createImageData(matrix.getWidth(),
+        matrix.getHeight());
+      var data = imgData.data;
+      for (var y = 0; y < matrix.getHeight(); ++y) {
+        for (var x = 0; x < matrix.getWidth(); ++x) {
+          var idx = (y * matrix.getWidth() + x) * 4;
+          var val = (matrix.get(x, y) ? 0 : 255);
+          data[idx] = data[idx + 1] = data[idx + 2] = val;
+          data[idx + 3] = 255;
+        }
+      }
+      context.putImageData(imgData, 0, 0);
+    }
+
+    load();
+  })();
+</script>
+</body>
+
+</html>

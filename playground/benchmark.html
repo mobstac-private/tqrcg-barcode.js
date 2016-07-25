@@ -1,0 +1,146 @@
+<html>
+<head>
+  <title>Decoding Benchmark</title>
+
+  <style type="text/css">
+    #result {
+      white-space: pre;
+    }
+  </style>
+
+  <script type="text/javascript"
+          src="../dist/w69b.qrcode.min.js"></script>
+  <script type="text/javascript">
+    if (window.goog)
+      goog.require('main');
+  </script>
+
+
+</head>
+<body>
+
+<h1>Decoding Benchmark</h1>
+
+<div id="result"></div>
+<button id="startBtn" disabled>Start</button>
+
+<script type="text/javascript">
+
+  (function() {
+    var NUM_ITERATIONS = 50;
+    var ALL_OPTIONS = [
+      {webgl: true, worker: false},
+      {webgl: false, worker: false},
+      {webgl: true, worker: true},
+      {webgl: false, worker: true}
+    ].filter(function(opt) {
+        return !opt.webgl || w69b.qr.decoding.isWebGlSupported()
+      });
+
+    function log() {
+      console.log.apply(console, arguments);
+      var logEl = document.getElementById('result');
+      var args = [].map.call(arguments, function(item) {
+        return JSON.stringify(item);
+      });
+      logEl.innerHTML += args.join(' ') + '\n';
+    }
+
+
+    function buildBenchmark(fn) {
+      return function() {
+        var promise = Promise.resolve();
+        for (var i = 0; i < NUM_ITERATIONS; ++i) {
+          promise = promise.then(fn);
+        }
+        return promise;
+      }
+    }
+
+    function runSequentially(fns) {
+      var promise = Promise.resolve();
+      fns.forEach(function(fn) {
+        promise = promise.then(fn);
+      });
+      return promise;
+    }
+
+    function runBenchmark(img) {
+      return runSequentially(ALL_OPTIONS.map(function(opt) {
+        return function() {
+          log('starting benchmark for', opt);
+          var decoder = new w69b.qr.decoding.Decoder(opt);
+          var benchmark = buildBenchmark(function() {
+            return decoder.decode(img).then(null, function() {
+              return null;
+            });
+          });
+          // run once without measuring time to make sure worker is loaded.
+          return benchmark().then(function() {
+            return measureTime(benchmark).then(function(time) {
+              decoder.dispose();
+              log(img.tagName + ' completed in ' + time + 'ms = ' +
+                1000 / (time / NUM_ITERATIONS) + ' fps');
+            });
+
+          });
+        };
+      }));
+    }
+
+    function measureTime(fn) {
+      var startTime = performance.now();
+      return Promise.resolve(fn()).then(function() {
+        return performance.now() - startTime;
+      })
+    }
+
+    function loadImg() {
+      return new Promise(function(resolve) {
+        var img = new Image();
+        img.src = "../test_data/firefox.jpg";
+        img.addEventListener('load', function() {
+          resolve(img);
+        });
+      });
+    }
+
+    function loadVideo() {
+      return new Promise(function(resolve) {
+        var video = document.createElement('video');
+        video.setAttribute('autoplay', true);
+        video.setAttribute('loop', true);
+        video.innerHTML = '<source type="video/webm" src="../test_data/firefox.webm">' +
+          '<source type="video/mp4" src="../test_data/firefox.mp4">';
+        video.addEventListener('canplay', function() {
+          video.play();
+          resolve(video);
+        });
+      });
+    }
+
+    function init() {
+      log('WebGL supported: ', w69b.qr.decoding.isWebGlSupported());
+      var startBtn = document.getElementById('startBtn');
+      w69b.qr.decoding.setWorkerUrl(
+        '../dist/w69b.qrcode.decodeworker.min.js');
+
+      Promise.all([loadImg(), loadVideo()]).then(function(all) {
+        startBtn.removeAttribute('disabled');
+        startBtn.addEventListener('click', function() {
+          startBtn.setAttribute('disabled', true);
+          runSequentially(all.map(function(elem) {
+            return runBenchmark.bind(null, elem);
+          })).then(function() {
+            startBtn.removeAttribute('disabled');
+          });
+        });
+      });
+    }
+
+    init();
+  })();
+</script>
+</body>
+
+</html>
