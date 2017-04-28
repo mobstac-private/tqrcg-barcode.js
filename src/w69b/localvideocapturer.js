@@ -172,23 +172,37 @@ goog.scope(function() {
    */
   pro.getUserMedia = function() {
     var self = this;
-    function gotSources(sources) {
-      var constraint = true;
-      for (var i = 0; i < sources.length; ++i) {
-        var source = sources[i];
-        if (source['kind'] === 'video' && source['facing'] == 'environment') {
-          constraint = {'optional': [{'sourceId': source.id}]};
-          break;
-        }
-      }
+    function getMedia(deviceId) {
+      var constraint = {'optional': [{'facingMode': 'environment'}]};
+      if (deviceId)
+        constraint = {'optional': [{'sourceId': deviceId}]};
       LocalVideoCapturer.getMedia({'video': constraint},
         self.onGetMediaSuccess.bind(self),
         self.onGetMediaError.bind(self));
     }
-    if (window['MediaStreamTrack'] && window['MediaStreamTrack']['getSources'])
+    function gotSources(sources) {
+      for (var i = 0; i < sources.length; ++i) {
+        var source = sources[i];
+        if (source['kind'] === 'video' && source['facing'] == 'environment') {
+          getMedia(source.id);
+          break;
+        }
+      }
+    }
+    if (navigator['mediaDevices'] && navigator['mediaDevices']['enumerateDevices']) {
+      // Hack while facingMode not supported, just use last device.
+      navigator['mediaDevices']['enumerateDevices']().then(function(devs) {
+        devs = devs.filter(function(dev) { return dev['kind'] === 'videoinput'; });
+        if (devs.length)
+          getMedia(devs.slice(-1)[0]['deviceId']);
+        else
+          getMedia([]);
+      });
+    } else if (window['MediaStreamTrack'] && window['MediaStreamTrack']['getSources']) {
       window['MediaStreamTrack']['getSources'](gotSources);
-    else
+    } else {
       gotSources([]);
+    }
   };
 
   /**
