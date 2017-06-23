@@ -153,7 +153,7 @@ goog.scope(function() {
     // If disposed since, dont do anything.
     if (this.mediaVideo_ === null)
       return;
-    this.mediaVideo_.srcObject = stream;
+    this.mediaVideo_['srcObject'] = stream;
     this.mediaVideo_.play();
     this.stream_ = stream;
   };
@@ -210,7 +210,7 @@ goog.scope(function() {
    */
   pro.disposeInternal = function() {
     this.mediaVideo_.pause();
-    this.mediaVideo_.srcObject = null;
+    this.mediaVideo_['srcObject'] = null;
     this.mediaVideo_ = null;
     if (this.stream_) {
       if (this.stream_.stop)
