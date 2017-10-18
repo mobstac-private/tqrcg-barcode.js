@@ -32,15 +32,11 @@ goog.scope(function() {
    * Alias to getUserMedia functions.
    * @type {Function}
    */
-  LocalVideoCapturer.getMedia = (
-    navigator['getUserMedia'] ||
-      navigator['webkitGetUserMedia'] ||
-      navigator['mozGetUserMedia'] ||
-      navigator['msGetUserMedia']);
-
-  if (LocalVideoCapturer.getMedia)
-    LocalVideoCapturer.getMedia =
-      LocalVideoCapturer.getMedia.bind(navigator);
+  LocalVideoCapturer.getMedia = null;
+  if (navigator['mediaDevices']) {
+    LocalVideoCapturer.getMedia = navigator['mediaDevices']['getUserMedia']
+      .bind(navigator['mediaDevices'])
+  }
 
   /**
    * Canvas uses to call getImageData on.
@@ -176,7 +172,7 @@ goog.scope(function() {
       var constraint = {'optional': [{'facingMode': 'environment'}]};
       if (deviceId)
         constraint = {'optional': [{'sourceId': deviceId}]};
-      LocalVideoCapturer.getMedia({'video': constraint},
+      LocalVideoCapturer.getMedia({'video': constraint}).then(
         self.onGetMediaSuccess.bind(self),
         self.onGetMediaError.bind(self));
     }
