@@ -87,4 +87,7 @@ goog.scope(function() {
     }
     return ErrorCorrectionLevel.FOR_BITS[bits];
   };
+
+
+  goog.exportProperty(pro, 'toString', pro.toString);
 });

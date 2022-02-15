@@ -37,7 +37,6 @@ goog.scope(function() {
    * @param {string} content to encode.
    * @param {string=} opt_ecName optional error correciton name.
    * Defaults to L .
-   * @private
    */
   _.encode = function(content, opt_ecName) {
     var ecLevel = null;

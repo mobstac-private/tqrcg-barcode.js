@@ -98,4 +98,11 @@ goog.scope(function() {
     return result.join('');
   };
 
+  goog.exportProperty(pro, 'getBytes', pro.getBytes);
+  goog.exportProperty(pro, 'getHeight', pro.getHeight);
+  goog.exportProperty(pro, 'getWidth', pro.getWidth);
+  goog.exportProperty(pro, 'get', pro.get);
+  goog.exportProperty(pro, 'set', pro.set);
+  goog.exportProperty(pro, 'clear', pro.clear);
+
 });

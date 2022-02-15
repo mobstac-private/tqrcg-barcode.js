@@ -25,6 +25,11 @@ module.exports = function(karma) {
     preprocessors: {
       '**/*.js': ['sourcemap']
     },
+    client: {
+      mocha: {
+        timeout : 6000
+      }
+    },
 
     files: [
       'node_modules/iconv.js/iconv.js',

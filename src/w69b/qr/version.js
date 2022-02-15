@@ -392,5 +392,8 @@ goog.scope(function() {
     // If we didn't find a close enough match, fail
     return null;
   };
+
+  goog.exportProperty(pro, 'getVersionNumber', pro.getVersionNumber);
+  goog.exportProperty(pro, 'getTotalCodewords', pro.getTotalCodewords);
 });
 

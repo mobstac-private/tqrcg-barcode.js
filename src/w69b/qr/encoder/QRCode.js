@@ -177,5 +177,10 @@ goog.scope(function() {
     return maskPattern >= 0 && maskPattern < _.NUM_MASK_PATTERNS;
   };
 
+  goog.exportProperty(pro, 'getMatrix', pro.getMatrix);
+  goog.exportProperty(pro, 'getMaskPattern', pro.getMaskPattern);
+  goog.exportProperty(pro, 'getVersion', pro.getVersion);
+  goog.exportProperty(pro, 'getECLevel', pro.getECLevel);
+  goog.exportProperty(pro, 'getMode', pro.getMode);
 });
 
