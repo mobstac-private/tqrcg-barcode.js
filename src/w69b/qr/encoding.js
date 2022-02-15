@@ -39,7 +39,7 @@ goog.scope(function() {
    * Defaults to L .
    * @private
    */
-  _.encode_ = function(content, opt_ecName) {
+  _.encode = function(content, opt_ecName) {
     var ecLevel = null;
     if (opt_ecName)
       ecLevel = ErrorCorrectionLevel.getByName(opt_ecName);
@@ -67,7 +67,7 @@ goog.scope(function() {
    * Defaults to L .
    */
   _.drawOnCanvas = function(content, canvas, opt_margin, opt_ecName) {
-    var qrCode = _.encode_(content, opt_ecName);
+    var qrCode = _.encode(content, opt_ecName);
     var quiet = goog.isDef(opt_margin) ? opt_margin : renderer.QUIET_ZONE_SIZE;
     var drawable = new w69b.qr.CanvasDrawable(canvas);
     renderer.render(qrCode, drawable, canvas.width, canvas.height,
@@ -85,7 +85,7 @@ goog.scope(function() {
    * @return {number} size of qr code.
    */
   _.getSize = function(content, opt_ecName) {
-    var qrcode = _.encode_(content, opt_ecName);
+    var qrcode = _.encode(content, opt_ecName);
     return qrcode.getMatrix().getWidth();
   };
 
@@ -99,7 +99,7 @@ goog.scope(function() {
    * @return {string} svg source.
    */
   _.drawAsSVG = function(content, size, opt_margin, opt_ecName) {
-    var qrCode = _.encode_(content, opt_ecName);
+    var qrCode = _.encode(content, opt_ecName);
     var quiet = goog.isDef(opt_margin) ? opt_margin : renderer.QUIET_ZONE_SIZE;
     var drawable = new SvgDrawable();
     renderer.render(qrCode, drawable, size, size, quiet);
@@ -115,7 +115,7 @@ goog.scope(function() {
    * @return {string} eps source.
    */
   _.drawAsEPS = function(content, size, opt_margin, opt_ecName) {
-    var qrCode = _.encode_(content, opt_ecName);
+    var qrCode = _.encode(content, opt_ecName);
     var quiet = goog.isDef(opt_margin) ? opt_margin : renderer.QUIET_ZONE_SIZE;
     var drawable = new EpsDrawable();
     renderer.render(qrCode, drawable, size, size, quiet);
@@ -126,4 +126,5 @@ goog.scope(function() {
   goog.exportSymbol('w69b.qr.encoding.drawAsSVG', _.drawAsSVG);
   goog.exportSymbol('w69b.qr.encoding.drawAsEPS', _.drawAsEPS);
   goog.exportSymbol('w69b.qr.encoding.getSize', _.getSize);
+  goog.exportSymbol('w69b.qr.encoding.encode', _.encode);
 });
