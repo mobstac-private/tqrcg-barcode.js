@@ -1,5 +1,5 @@
 {
   "output-file": "dist/w69b.qrcode.min.js",
   "inherits": "plovr-root.json",
-  "output-wrapper": "// barcode.js Copyright 2012 mb@w69b.com\n%output%"
+  "output-wrapper": "// barcode.js Copyright 2012 mb@w69b.com\n(function(){%output%}).call(module.exports);"
 }
