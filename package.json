@@ -2,7 +2,7 @@
   "author": "Manuel Braun (mb@w69b.com)",
   "description": "Javascript QR Code library, based on zxing",
   "name": "barcode.js",
-  "version": "0.1.24",
+  "version": "0.1.25",
   "license": "APACHE-2.0",
   "main": "./w69b.qrcode.min.js",
   "repository": {

@@ -2,6 +2,8 @@
 goog.provide('w69b.FileSaver');
 goog.require('goog.Disposable');
 
+var isBrowser = typeof window !== 'undefined';
+
 goog.scope(function() {
   /**
    * @param {!Blob} blob to save.
@@ -42,6 +44,7 @@ goog.scope(function() {
    * @return {boolean} weather saveAs is supported.
   */
   FileSaver.checkSupport_ = function() {
+    if (!isBrowser) return false;
     var a = document.createElement('a');
     return navigator['msSaveBlob'] || ('download' in a);
   };

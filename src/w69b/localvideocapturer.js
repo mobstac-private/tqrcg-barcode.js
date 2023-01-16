@@ -33,7 +33,7 @@ goog.scope(function() {
    * @type {Function}
    */
   LocalVideoCapturer.getMedia = null;
-  if (navigator['mediaDevices']) {
+  if (typeof window !== 'undefined' && navigator['mediaDevices']) {
     LocalVideoCapturer.getMedia = navigator['mediaDevices']['getUserMedia']
       .bind(navigator['mediaDevices']);
   }

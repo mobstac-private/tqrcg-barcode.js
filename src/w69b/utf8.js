@@ -184,4 +184,4 @@ goog.provide('w69b.utf8');
     // Plain old global export fallback.
     global['utf8'] = exports;
   }
-})(self);
+})(this);

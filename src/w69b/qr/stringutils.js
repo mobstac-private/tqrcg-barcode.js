@@ -8,7 +8,7 @@ goog.require('w69b.utf8');
 goog.scope(function() {
   var _ = w69b.qr.stringutils;
   var utf8 = w69b.utf8;
-  var iconv = self.iconv;
+  var iconv = typeof self !== 'undefined' && self.iconv;
   var iconvlite = w69b.iconvlite;
   var InvalidCharsetError = w69b.qr.InvalidCharsetError;
 
